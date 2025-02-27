@@ -1,0 +1,93 @@
+/* Sidebar styles */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background-color: #343a40;
+  color: white;
+  padding: 10px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  white-space: nowrap;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+/* Collapsed sidebar */
+.sidebar.collapsed {
+  width: 60px;
+}
+
+/* Toggle button - stays fixed */
+.toggle-btn {
+  position: fixed;
+  top: 10px;
+  left: 230px;
+  background: none;
+  border: none;
+  color: gray;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1100;
+  transition: left 0.3s ease;
+}
+
+/* Button position when sidebar is collapsed */
+.sidebar.collapsed + .toggle-btn {
+  left: 70px;
+}
+
+/* Sidebar logo */
+.sidebar-logo {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Hide logo text when collapsed */
+.sidebar.collapsed .sidebar-logo span {
+  opacity: 0;
+  width: 0;
+  transition: opacity 0.3s ease, width 0.3s ease;
+  display: inline-block;
+}
+
+/* Menu items */
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+  transition: opacity 0.3s ease, padding 0.3s ease;
+  color: white;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+
+/* Hide text when collapsed */
+.sidebar.collapsed .menu-item span {
+  opacity: 0;
+  width: 0;
+  transition: opacity 0.3s ease, width 0.3s ease;
+  display: inline-block;
+}
+
+/* Icon styles */
+.menu-item i {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+/* Icon animation on collapse */
+.sidebar.collapsed .menu-item i {
+  transform: scale(1.2);
+}

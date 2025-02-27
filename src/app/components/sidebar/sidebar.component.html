@@ -1,0 +1,33 @@
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <!-- Sidebar Logo -->
+  <div class="sidebar-logo">
+    <i class="bi bi-grid"></i>
+    <span *ngIf="!isCollapsed">Stock Manager</span>
+  </div>
+
+  <!-- Menu Items -->
+  <a class="menu-item" routerLink="/dashboard">
+    <i class="bi bi-house"></i>
+    <span *ngIf="!isCollapsed">Dashboard</span>
+  </a>
+
+  <a class="menu-item" routerLink="/products">
+    <i class="bi bi-box"></i>
+    <span *ngIf="!isCollapsed">Products</span>
+  </a>
+
+  <a class="menu-item" routerLink="/suppliers">
+    <i class="bi bi-truck"></i>
+    <span *ngIf="!isCollapsed">Suppliers</span>
+  </a>
+
+  <a class="menu-item" routerLink="/settings">
+    <i class="bi bi-gear"></i>
+    <span *ngIf="!isCollapsed">Settings</span>
+  </a>
+</div>
+
+<!-- Toggle Button -->
+<button class="toggle-btn" (click)="isCollapsed = !isCollapsed">
+  <i class="bi" [ngClass]="{'bi-chevron-left': !isCollapsed, 'bi-chevron-right': isCollapsed}"></i>
+</button>

@@ -1,0 +1,21 @@
+<div class="card p-3 mb-3" *ngIf="product">
+    <h4>Modifier le produit</h4>
+    <div class="row">
+      <div class="col-md-2">
+        <input type="text" [(ngModel)]="product.code" class="form-control" />
+      </div>
+      <div class="col-md-2">
+        <input type="text" [(ngModel)]="product.name" class="form-control" />
+      </div>
+      <div class="col-md-2">
+        <input type="number" [(ngModel)]="product.unitPrice" class="form-control" />
+      </div>
+      <div class="col-md-2">
+        <input type="number" [(ngModel)]="product.quantityInStock" class="form-control" />
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-success" (click)="updateProduct()">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+  
