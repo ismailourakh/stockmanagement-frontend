@@ -1,0 +1,48 @@
+<div class="container mt-4">
+    <h2 class="mb-3">Statistiques</h2>
+  
+    <!-- Menu de sélection des statistiques -->
+    <div class="card p-3">
+      <h5>Sélectionnez les statistiques à visualiser</h5>
+  
+      <div class="mb-3">
+        <label for="statType" class="form-label">Type de statistique</label>
+        <select id="statType" class="form-select" [(ngModel)]="selectedStatType">
+          <option value="stock_entree">Stock Entré</option>
+          <option value="stock_sortie">Stock Sortie</option>
+          <option value="produits_vendus">Produits Vendus</option>
+        </select>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-6">
+          <label for="startDate" class="form-label">Date de début:</label>
+          <input type="date" id="startDate" class="form-control" [(ngModel)]="startDate">
+        </div>
+        <div class="col-md-6">
+          <label for="endDate" class="form-label">Date de fin:</label>
+          <input type="date" id="endDate" class="form-control" [(ngModel)]="endDate">
+        </div>
+      </div>
+    </div>
+  
+    <!-- Graphiques -->
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <div class="chart-container">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="chart-container">
+          <canvas id="lineChart"></canvas>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="chart-container">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  

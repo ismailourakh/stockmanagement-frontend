@@ -1,0 +1,98 @@
+<div class="container mt-4">
+    <h2 class="mb-3">Liste des Produits</h2>
+    
+    <!-- Barre de recherche -->
+    <div class="mb-3">
+      <input type="text" [(ngModel)]="searchKeyword" placeholder="Rechercher un produit..." class="form-control" />
+      <button class="btn btn-primary mt-2" (click)="searchProducts()">Rechercher</button>
+    </div>
+  
+    <!-- Tableau des produits -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Code</th>
+          <th>Nom</th>
+          <th>Prix</th>
+          <th>Quantité</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.id }}</td>
+          <td>{{ product.code }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.unitPrice }} €</td>
+          <td>{{ product.quantityInStock }}</td>
+          <td>
+            <!-- Bouton Modifier -->
+            <button class="btn btn-info btn-sm" (click)="editProduct(product)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+
+            <!-- Bouton Supprimer -->
+            <button class="btn btn-danger btn-sm" (click)="confirmDelete(product)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<!-- Modal de confirmation de suppression -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmation de suppression</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Êtes-vous sûr de vouloir supprimer le produit <strong>{{ productToDelete?.name }}</strong> ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-danger" (click)="deleteProduct()" data-bs-dismiss="modal">Supprimer</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal de modification -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Modifier le produit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <form *ngIf="selectedProduct">
+            <div class="mb-3">
+              <label for="productName" class="form-label">Nom</label>
+              <input type="text" id="productName" class="form-control" [(ngModel)]="selectedProduct.name" name="name">
+            </div>
+            <div class="mb-3">
+              <label for="productCode" class="form-label">Code</label>
+              <input type="text" id="productCode" class="form-control" [(ngModel)]="selectedProduct.code" name="code">
+            </div>
+            <div class="mb-3">
+              <label for="productPrice" class="form-label">Prix</label>
+              <input type="number" id="productPrice" class="form-control" [(ngModel)]="selectedProduct.unitPrice" name="unitPrice">
+            </div>
+            <div class="mb-3">
+              <label for="productQuantity" class="form-label">Quantité</label>
+              <input type="number" id="productQuantity" class="form-control" [(ngModel)]="selectedProduct.quantityInStock" name="quantityInStock">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary" (click)="updateProduct()">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

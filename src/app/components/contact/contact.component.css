@@ -1,0 +1,11 @@
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .bi {
+    margin-right: 8px;
+    color: #007bff;
+  }
+  
