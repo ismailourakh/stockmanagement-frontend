@@ -7,6 +7,7 @@ import { CommandeComponent } from './components/commande/commande.component';
 import { RechercheComponent } from './components/recherche/recherche.component';
 import { StatistiqueComponent } from './components/statistique/statistique.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 export const routes: Routes = [
@@ -17,7 +18,8 @@ export const routes: Routes = [
   { path: 'recherche', component: RechercheComponent },
   { path: 'statistique', component: StatistiqueComponent },
   { path: 'contact', component: ContactComponent },
-  { path: '', redirectTo: '/accueil', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({
