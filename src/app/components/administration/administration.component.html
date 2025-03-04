@@ -1,1 +1,184 @@
-<p>administration works!</p>
+<div class="container mt-4">
+    <h2 class="mb-3">Liste des Utilisateurs</h2>
+  
+    <!-- Barre de recherche et bouton Ajouter un utilisateur -->
+    <div class="row mb-3">
+      <div class="col-md-8">
+        <input type="text" [(ngModel)]="searchKeyword" placeholder="Rechercher un utilisateur..." class="form-control" />
+      </div>
+      <div class="col-md-2 text-end">
+        <!-- Search input and button with Bootstrap icon -->
+        <button class="btn btn-info" (click)="searchUsers()">
+          <i class="bi bi-search"></i>
+        </button>
+        <!-- Button to open the modal for creating a user -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createUserModal">
+            <i class="bi bi-person-plus"></i>
+        </button>
+      </div>
+    </div>
+  
+    <!-- Tableau des utilisateurs -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Login</th>
+          <th>Email</th>
+          <th>Laboratoire</th>
+          <th>Secteur</th>
+          <th>Rôle</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.fullName }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.laboratory }}</td>
+          <td>{{ user.sector }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <!-- Bouton Modifier -->
+            <button class="btn btn-info btn-sm" (click)="editUser(user)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+  
+            <!-- Bouton Supprimer -->
+            <button class="btn btn-danger btn-sm" (click)="confirmDelete(user)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Modal de création d'un utilisateur -->
+  <div class="modal fade" id="createUserModal" tabindex="-1" aria-labelledby="createUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createUserModalLabel">Ajouter un utilisateur</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-control" [(ngModel)]="newUser.fullName" name="fullName" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Login</label>
+              <input type="text" class="form-control" [(ngModel)]="newUser.username" name="username" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" [(ngModel)]="newUser.email" name="email" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Mot de passe</label>
+              <input type="password" class="form-control" [(ngModel)]="newUser.password" name="password" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Confirmer Mot de passe</label>
+              <input type="password" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" />
+            </div>
+            <!-- Role Selection -->
+            <div class="mb-3">
+              <label class="form-label">Rôle</label>
+              <select class="form-control" [(ngModel)]="newUser.role" name="role">
+                <option value="USER">Utilisateur</option>
+                <option value="ADMIN">Administrateur</option>
+                <!-- Add more roles as needed -->
+              </select>
+            </div>
+            <!-- Laboratory -->
+            <div class="mb-3">
+              <label class="form-label">Laboratoire</label>
+              <input type="text" class="form-control" [(ngModel)]="newUser.laboratory" name="laboratory" />
+            </div>
+            <!-- Sector -->
+            <div class="mb-3">
+              <label class="form-label">Secteur</label>
+              <input type="text" class="form-control" [(ngModel)]="newUser.sector" name="sector" />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary" (click)="createUser()" data-bs-dismiss="modal">Créer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal de modification d'un utilisateur -->
+  <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editUserModalLabel">Modifier l'utilisateur</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form *ngIf="selectedUser">
+            <div class="mb-3">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedUser.fullName" name="fullName" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Login</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedUser.username" name="username" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" [(ngModel)]="selectedUser.email" name="email" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Laboratoire</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedUser.laboratory" name="laboratory" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Secteur</label>
+              <input type="text" class="form-control" [(ngModel)]="selectedUser.sector" name="sector" />
+            </div>
+            <!-- Role Selection -->
+            <div class="mb-3">
+              <label class="form-label">Rôle</label>
+              <select class="form-control" [(ngModel)]="selectedUser.role" name="role">
+                <option value="USER">Utilisateur</option>
+                <option value="ADMIN">Administrateur</option>
+                <!-- Add more roles if needed -->
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary" (click)="updateUser()" data-bs-dismiss="modal">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal de confirmation de suppression -->
+  <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteUserModalLabel">Confirmation de suppression</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Êtes-vous sûr de vouloir supprimer l'utilisateur <strong>{{ userToDelete?.fullName }}</strong> ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-danger" (click)="deleteUser()" data-bs-dismiss="modal">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
