@@ -1,19 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common'; // 🔥 Ajoute ceci !
+import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar',
-  standalone: true, // 🔥 Vérifie que c'est un Standalone Component
-  imports: [CommonModule, RouterModule], // 🔥 Ajoute ici pour que *ngIf fonctionne
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
+  private authService = inject(AuthService);
   isCollapsed = false;
+  isLoggedIn = this.authService.isAuthenticated(); // Vérifie si l'utilisateur est connecté
 
-  testClick() {
-    console.log("Le lien Stock a été cliqué !");
+  constructor() {
+    // 🔥 Met à jour isLoggedIn automatiquement lorsque le token change
+    effect(() => {
+      this.isLoggedIn = this.authService.isAuthenticated();
+    });
   }
-  
+
+  logout() {
+    this.authService.logout();
+  }
 }

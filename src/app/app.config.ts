@@ -1,8 +1,20 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { inject, Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
 
-import { routes } from './app.routes';
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  private authService = inject(AuthService);
 
-export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
-};
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const token = this.authService.getToken();
+
+    if (token) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` }
+      });
+    }
+    
+    return next.handle(req);
+  }
+}

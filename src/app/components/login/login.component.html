@@ -3,7 +3,7 @@
     <form (submit)="onSubmit()">
       <input type="text" [formControl]="username" placeholder="Username" required />
       <input type="password" [formControl]="password" placeholder="Password" required />
-      <button type="submit">Login</button>
+      <button type="button" (click)="onSubmit()">Login</button>
     </form>
   </div>
   
